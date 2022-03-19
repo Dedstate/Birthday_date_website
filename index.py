@@ -7,7 +7,7 @@ app = Flask(__name__)
 @app.route("/")
 @app.route("/index")
 def index():
-    return "\n".join(a)
+    return "<br>".join(a)
 
 
 if __name__ == "__main__":
