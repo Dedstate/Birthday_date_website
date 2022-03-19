@@ -11,10 +11,8 @@ def index():
     return render_template("index.html", a=a)
 
 
-app.add_url_rule(
-    "/favicon.ico", redirect_to=url_for("static", filename="favicon.png")
-)
-
-
 if __name__ == "__main__":
     app.run()
+    app.add_url_rule(
+        "/favicon.ico", redirect_to=url_for("static", filename="favicon.png")
+    )
