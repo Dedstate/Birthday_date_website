@@ -1,0 +1,6 @@
+**/.DS_Store
+**/*.pyc
+**/__pycache__/
+
+# Keep in the end
+./**/*venv*
