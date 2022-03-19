@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static', filename='index.css')}}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{url_for('static', filename='index.css')}}" />
     <title>Дни рождений 8Г</title>
-</head>
-<body>
-    {% for name, date in a %}
-    <div>
+  </head>
+  <body>
+    <h1>Дни рождений 8Г</h1>
+    <div id="cards">
+      {% for name, date in a %}
+      <div class="card">
         <h2>{{name}}</h2>
         {% if date == ""%}
-            <p>Нет информации</p>
+        <p>Нет информации</p>
         {% else %}
-            <p>{{date}}</p>
+        <p>{{date}}</p>
         {% endif %}
+      </div>
+      {%endfor%}
     </div>
-    {%endfor%}
-</body>
+    <p id="info">Герман Иванов ⎜ Ленивый Тукаи</p>
+  </body>
 </html>
