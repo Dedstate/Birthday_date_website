@@ -1,1 +1,1 @@
-web: gunicon main.py
+web: gunicorn main.py
