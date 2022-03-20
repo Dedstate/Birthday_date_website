@@ -56,3 +56,17 @@ body {
 #info {
   text-align: center;
 }
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: rgb(24, 24, 24);
+  }
+  p,
+  h2,
+  h1 {
+    color: white;
+  }
+  .card {
+    border-color: white;
+  }
+}
