@@ -63,6 +63,7 @@ hr {
   height: 0px;
   box-shadow: #888888 0 0 2px;
   color: black;
+  fill: black;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -79,5 +80,7 @@ hr {
   }
   hr {
     border-color: white;
+    color: white;
+    fill: white;
   }
 }
