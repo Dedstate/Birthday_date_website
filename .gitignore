@@ -1,6 +1,7 @@
 ./**/.DS_Store
 **/*.pyc
 **/__pycache__/
+.vscode
 
 # Keep in the end
 ./**/*venv*
