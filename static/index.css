@@ -1,18 +1,25 @@
-h1 {
+:root {
   font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+
+h1 {
   font-weight: normal;
   font-size: 2.5rem;
   text-align: center;
 }
 
 h2 {
-  font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+h3 {
   font-weight: normal;
   font-size: 1.2rem;
 }
 
 p {
-  font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-size: 1rem;
 }
 
@@ -67,11 +74,35 @@ hr {
   padding: 0px;
 }
 
+a {
+  text-decoration: none;
+  color: mediumblue;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+#bottom-navbar {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+}
+
+#bottom-navbar >* {
+  flex-grow: 1;
+  text-align: center;
+  align-self: center;
+  margin: 0.5rem;
+}
+
 @media (prefers-color-scheme: dark) {
   body {
     background-color: rgb(30, 30, 30);
   }
+  :root,
   p,
+  h3,
   h2,
   h1 {
     color: white;
@@ -82,5 +113,8 @@ hr {
   hr {
     border-color: white;
     background-color: white;
+  }
+  a {
+    color: deepskyblue;
   }
 }

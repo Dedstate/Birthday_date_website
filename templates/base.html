@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Даты рождений учеников {{grade}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='index.css')}}" />
+    {% if archived %}
+    <title>Архив — Дни рождений {{grade}}</title>
+    {% else %}
+    <title>Дни рождений {{grade}}</title>
+    {% endif %}
+  </head>
+  <body>
+    <h1>Дни рождений {{grade}}</h1>
+    {% if archived %}
+    <h2>Архивные записи</h2>
+    {%endif%}
+    <div id="cards">
+      {% for student in students %}
+      <!-- Student Card -->
+      <div class="card">
+        <!-- Name -->
+        <h3>{{student[0]}}</h3>
+        <!-- Date of Birth -->
+        {% if student[1] == ""%}
+        <p>—</p>
+        {% else %}
+        <p>{{student[1]}}</p>
+        {% endif %}
+        <!-- Year when left, if archived mode -->
+        {% if archived %}
+        <p><i>Покинул(а) после {{student[2]}}-го класса.</i></p>
+        {% endif %}
+      </div>
+      <!-- End Student Card -->
+      {%endfor%}
+    </div>
+    <hr />
+    <div id="bottom-navbar">
+      <!-- Navigation to archive and back -->
+      {% if archived %}
+      <div>
+        <a href="..">⟨ Вернуться на главную</a>
+      </div>
+      {% else %}
+      <div><a href="archived">Перейти в архив ⟩</a></div>
+      {% endif %}
+      <!-- End of navigaiton -->
+      <!-- Other links and copyright -->
+
+      <div>
+        <a
+          style="color: inherit"
+          href="https://github.com/germanivanov0719/birthday-dates"
+        >
+          <p>GitHub</p>
+        </a>
+      </div>
+
+      <div><p id="info">© German Ivanov 2022</p></div>
+    </div>
+  </body>
+</html>
