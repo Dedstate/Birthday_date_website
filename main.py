@@ -1,13 +1,25 @@
 from datetime import date
-
 from flask import Flask, render_template
-
 from birthday_dates import archived, current
 
 # Initialize Flask app and set constants
 app = Flask(__name__)
 LETTER = "Г"  # Letter appended to the year
 YEAR = 2013  # Year when started school
+
+
+# Do not modify below
+def get_grade_name(year: int, letter: str) -> str:
+    y = date.today().year - year
+    if date.today().month < 6:
+        y -= 1
+    grade = str(y) + letter
+    if y > 11:
+        grade = f"выпускников 11{LETTER} класса"
+    return grade
+
+
+grade = get_grade_name(YEAR, LETTER)
 
 
 @app.route("/")
@@ -35,16 +47,5 @@ def history() -> str:
     )
 
 
-def get_grade_name(year: int, letter: str) -> str:
-    y = date.today().year - year
-    if date.today().month < 6:
-        y -= 1
-    grade = str(y) + letter
-    if y > 11:
-        grade = f"выпускников 11{LETTER} класса"
-    return grade
-
-
 if __name__ == "__main__":
-    grade = get_grade_name(YEAR, LETTER)
     app.run()
