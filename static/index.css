@@ -1,35 +1,31 @@
-:root {
-  font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
-}
-
-h1 {
+/* h1 {
   font-weight: normal;
   font-size: 2.5rem;
   text-align: center;
-}
+} */
 
-h2 {
+/* h2 {
   font-weight: normal;
   font-size: 1.5rem;
   text-align: center;
-}
+} */
 
-h3 {
+/* h3 {
   font-weight: normal;
   font-size: 1.2rem;
-}
+} */
 
-p {
+/* p {
   font-size: 1rem;
-}
+} */
 
-#cards {
+/* #cards {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   flex-grow: 1;
   max-width: max-content;
-}
+} */
 
 body {
   margin: 5px;
@@ -37,7 +33,7 @@ body {
   overflow-x: hidden;
 }
 
-.card {
+/* .card {
   margin: 10px;
   padding: 10px;
   border: 1px solid black;
@@ -46,14 +42,14 @@ body {
   border-radius: 0.7rem;
   height: min-content;
   box-shadow: #888888 0 0 3px;
-}
+} */
 
-.card > * {
+/* .card > * {
   height: min-content;
   padding: 0;
   margin: 0.5rem;
   text-align: center;
-}
+} */
 
 @media screen and (min-height: 700px) {
   .card > * {
@@ -89,7 +85,7 @@ a:hover {
   flex-grow: 1;
 }
 
-#bottom-navbar >* {
+#bottom-navbar > * {
   flex-grow: 1;
   text-align: center;
   align-self: center;
