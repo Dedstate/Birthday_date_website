@@ -1,0 +1,30 @@
+@media (prefers-color-scheme: dark) {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  small {
+    color: white;
+  }
+
+  a > p {
+    color: inherit;
+  }
+
+  .text-muted {
+    color: lightgray !important;
+  }
+
+  body,
+  .card {
+    background-color: rgb(30, 30, 30);
+    border-color: white;
+  }
+  .card-footer {
+    background-color: rgb(50, 50, 50);
+    border-color: white;
+  }
+}
