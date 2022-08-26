@@ -1,6 +1,9 @@
 <script>
+  import csv from "jquery-csv";
+  const sources = ["birthdays.csv", "birthdays_archived.csv"];
   const LETTER = "Г"; // Class letter to append to the year
   const YEAR = 2013; // Year school started
+
   function getClass() {
     var today = new Date();
     let y = today.getFullYear() - YEAR;
@@ -13,24 +16,42 @@
     return y + LETTER;
   }
 
-  import csv from "jquery-csv";
-  const pages = ["/other", "/others", "/archive", "/history", "/archived"];
+  async function getDates() {
+    let r = [];
+    for (let i = 0; i < sources.length; i++) {
+      let text = await (await fetch(sources[i])).text();
+      r.push(await csv.toArrays(text));
+    }
+
+    return { normal: r[0], archived: r[1] };
+  }
+
+  async function setArchived(value = null) {
+    if (value !== null && typeof value == "boolean") {
+      archived = value;
+    } else if (archived) {
+      archived = false;
+      toggleArchiveText = "Перейти в архив ⟩";
+    } else {
+      archived = true;
+      toggleArchiveText = "⟨ Вернуться на главную";
+    }
+    if ('loaded' in allDates && allDates['loaded'] == false){
+      let loaded = await allDatesLoading;
+      loaded['loaded'] = true;
+      // @ts-ignore
+      allDates = loaded;
+    }
+    // dates = archived ? allDates["archived"] : allDates["normal"];
+  }
 
   let archived = false;
-  let path = "birthdays.csv";
-  console.log(location.pathname);
-  if (pages.includes(location.pathname.replace(".html", ""))) {
-    archived = true;
-    path = "../birthdays_archived.csv";
-  }
-  let dates = [];
+  let toggleArchiveText = "Перейти в архив ⟩";
+  let allDatesLoading = getDates();
+  let allDates = { archived: [], normal: [], loaded: false };
+  $: dates = archived ? allDates["archived"] : allDates["normal"];
+  setArchived(false);
   let grade = getClass();
-
-  fetch(path)
-    .then((response) => response.text())
-    .then((text) => {
-      dates = csv.toArrays(text);
-    });
 </script>
 
 <!-- Set Title -->
@@ -47,7 +68,7 @@
   {/if}
   <div class="container-fluid mt-3">
     <div class="row row-cols-auto">
-      {#each dates as student, i}
+      {#each dates as student}
         <div class="col flex-grow-1">
           <!-- Student Card -->
           <div class="card my-2">
@@ -78,22 +99,24 @@
   <hr />
   <div id="bottom-navbar" class="container">
     <div class="row">
-      {#if archived}
-        <div class="text-center col-sm container text-nowrap">
-          <a href=".."><p>⟨ Вернуться на главную</p></a>
-        </div>
-      {:else}
-        <div class="text-center col-sm container text-nowrap">
-          <a href="archived"><p>Перейти в архив ⟩</p></a>
-        </div>
-      {/if}
-      <div class="text-center col-sm container text-nowrap">
+      <div
+        class="text-center d-flex justify-content-center col-sm container text-nowrap"
+      >
+        <button class="btn btn-primary m-3" on:click={setArchived}
+          ><p class="m-0">{toggleArchiveText}</p></button
+        >
+      </div>
+      <div
+        class="text-center d-flex justify-content-center align-items-center col-sm container text-nowrap"
+      >
         <a href="https://github.com/germanivanov0719/birthday-dates">
-          <p>Исходный код на GitHub</p>
+          <p class="m-3">Исходный код на GitHub</p>
         </a>
       </div>
-      <div class="text-center col-sm container text-nowrap">
-        <p id="info">© German Ivanov 2022</p>
+      <div
+        class="text-center d-flex justify-content-center align-items-center col-sm container text-nowrap"
+      >
+        <p class="m-3" id="info">© German Ivanov 2022</p>
       </div>
     </div>
   </div>
