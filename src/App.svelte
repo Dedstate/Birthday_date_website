@@ -31,14 +31,12 @@
       archived = value;
     } else if (archived) {
       archived = false;
-      toggleArchiveText = "Перейти в архив ⟩";
     } else {
       archived = true;
-      toggleArchiveText = "⟨ Вернуться на главную";
     }
-    if ('loaded' in allDates && allDates['loaded'] == false){
+    if ("loaded" in allDates && allDates["loaded"] == false) {
       let loaded = await allDatesLoading;
-      loaded['loaded'] = true;
+      loaded["loaded"] = true;
       // @ts-ignore
       allDates = loaded;
     }
@@ -46,7 +44,6 @@
   }
 
   let archived = false;
-  let toggleArchiveText = "Перейти в архив ⟩";
   let allDatesLoading = getDates();
   let allDates = { archived: [], normal: [], loaded: false };
   $: dates = archived ? allDates["archived"] : allDates["normal"];
@@ -55,17 +52,20 @@
 </script>
 
 <!-- Set Title -->
-{#if archived}
-  <title>Архив — Дни рождений {grade}</title>
-{:else}
-  <title>Дни рождений {grade}</title>
-{/if}
+
+<title
+  >{#if archived}Архив — {/if}Дни рождений {grade}</title
+>
 
 <main>
   <h1 class="text-center">Дни рождений {grade}</h1>
-  {#if archived}
-    <h2 class="text-center">Архивные записи</h2>
-  {/if}
+
+  <h2 class="text-center text-muted" style="font-size: 1.5em">
+    {#if archived}
+      Архив
+    {/if}
+  </h2>
+
   <div class="container-fluid mt-3">
     <div class="row row-cols-auto">
       {#each dates as student}
@@ -74,15 +74,18 @@
           <div class="card my-2">
             <div class="card-body">
               <!-- Name -->
-              <h4 class="text-center card-title fw-normal">{student[0]}</h4>
+              <h2 class="text-center card-title fw-normal">{student[0]}</h2>
               <!-- Date of Birth -->
-              {#if !student[1]}
-                <h6 class="text-center card-subtitle text-muted">—</h6>
-              {:else}
-                <h6 class="text-center card-subtitle text-muted">
+              <h3
+                class="text-center card-subtitle text-muted"
+                style="font-size: 1.2em"
+              >
+                {#if !student[1]}
+                  —
+                {:else}
                   {student[1]}
-                </h6>
-              {/if}
+                {/if}
+              </h3>
             </div>
             <!-- Year when left, if archived mode -->
             {#if archived}
@@ -103,7 +106,11 @@
         class="text-center d-flex justify-content-center col-sm container text-nowrap"
       >
         <button class="btn btn-primary m-3" on:click={setArchived}
-          ><p class="m-0">{toggleArchiveText}</p></button
+          >{#if archived}
+            ⟨ Вернуться на главную
+          {:else}
+            Перейти в архив ⟩
+          {/if}</button
         >
       </div>
       <div
