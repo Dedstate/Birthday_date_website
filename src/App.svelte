@@ -1,6 +1,9 @@
 <script>
+  import csv from "jquery-csv";
+  const sources = ["birthdays.csv", "birthdays_archived.csv"];
   const LETTER = "Г"; // Class letter to append to the year
   const YEAR = 2013; // Year school started
+
   function getClass() {
     var today = new Date();
     let y = today.getFullYear() - YEAR;
@@ -13,55 +16,76 @@
     return y + LETTER;
   }
 
-  import csv from "jquery-csv";
-  const pages = ["/other", "/others", "/archive", "/history", "/archived"];
+  async function getDates() {
+    let r = [];
+    for (let i = 0; i < sources.length; i++) {
+      let text = await (await fetch(sources[i])).text();
+      r.push(await csv.toArrays(text));
+    }
+
+    return { normal: r[0], archived: r[1] };
+  }
+
+  async function setArchived(value = null) {
+    if (value !== null && typeof value == "boolean") {
+      archived = value;
+    } else if (archived) {
+      archived = false;
+    } else {
+      archived = true;
+    }
+    if ("loaded" in allDates && allDates["loaded"] == false) {
+      let loaded = await allDatesLoading;
+      loaded["loaded"] = true;
+      // @ts-ignore
+      allDates = loaded;
+    }
+    // dates = archived ? allDates["archived"] : allDates["normal"];
+  }
 
   let archived = false;
-  let path = "birthdays.csv";
-  console.log(location.pathname);
-  if (pages.includes(location.pathname.replace(".html", ""))) {
-    archived = true;
-    path = "../birthdays_archived.csv";
-  }
-  let dates = [];
+  let allDatesLoading = getDates();
+  let allDates = { archived: [], normal: [], loaded: false };
+  $: dates = archived ? allDates["archived"] : allDates["normal"];
+  setArchived(false);
   let grade = getClass();
-
-  fetch(path)
-    .then((response) => response.text())
-    .then((text) => {
-      dates = csv.toArrays(text);
-    });
 </script>
 
 <!-- Set Title -->
-{#if archived}
-  <title>Архив — Дни рождений {grade}</title>
-{:else}
-  <title>Дни рождений {grade}</title>
-{/if}
+
+<title
+  >{#if archived}Архив — {/if}Дни рождений {grade}</title
+>
 
 <main>
   <h1 class="text-center">Дни рождений {grade}</h1>
-  {#if archived}
-    <h2 class="text-center">Архивные записи</h2>
-  {/if}
+
+  <h2 class="text-center text-muted" style="font-size: 1.5em">
+    {#if archived}
+      Архив
+    {/if}
+  </h2>
+
   <div class="container-fluid mt-3">
     <div class="row row-cols-auto">
-      {#each dates as student, i}
+      {#each dates as student}
         <div class="col flex-grow-1">
           <!-- Student Card -->
           <div class="card my-2">
             <div class="card-body">
               <!-- Name -->
-              <h4 class="text-center card-title fw-normal">{student[0]}</h4>
+              <h2 class="text-center card-title fw-normal">{student[0]}</h2>
               <!-- Date of Birth -->
-              {#if !student[1]}
-                <h6 class="text-center card-subtitle text-muted">—</h6>
-              {:else}
-                <h6 class="text-center card-subtitle text-muted">
+              <h3
+                class="text-center card-subtitle text-muted"
+                style="font-size: 1.2em"
+              >
+                {#if !student[1]}
+                  —
+                {:else}
                   {student[1]}
-                </h6>
-              {/if}
+                {/if}
+              </h3>
             </div>
             <!-- Year when left, if archived mode -->
             {#if archived}
@@ -78,22 +102,28 @@
   <hr />
   <div id="bottom-navbar" class="container">
     <div class="row">
-      {#if archived}
-        <div class="text-center col-sm container text-nowrap">
-          <a href=".."><p>⟨ Вернуться на главную</p></a>
-        </div>
-      {:else}
-        <div class="text-center col-sm container text-nowrap">
-          <a href="archived"><p>Перейти в архив ⟩</p></a>
-        </div>
-      {/if}
-      <div class="text-center col-sm container text-nowrap">
+      <div
+        class="text-center d-flex justify-content-center col-sm container text-nowrap"
+      >
+        <button class="btn btn-primary m-3" on:click={setArchived}
+          >{#if archived}
+            ⟨ Вернуться на главную
+          {:else}
+            Перейти в архив ⟩
+          {/if}</button
+        >
+      </div>
+      <div
+        class="text-center d-flex justify-content-center align-items-center col-sm container text-nowrap"
+      >
         <a href="https://github.com/germanivanov0719/birthday-dates">
-          <p>Исходный код на GitHub</p>
+          <p class="m-3">Исходный код на GitHub</p>
         </a>
       </div>
-      <div class="text-center col-sm container text-nowrap">
-        <p id="info">© German Ivanov 2022</p>
+      <div
+        class="text-center d-flex justify-content-center align-items-center col-sm container text-nowrap"
+      >
+        <p class="m-3" id="info">© German Ivanov 2022</p>
       </div>
     </div>
   </div>
