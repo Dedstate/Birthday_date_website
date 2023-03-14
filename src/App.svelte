@@ -53,9 +53,9 @@
 
 <!-- Set Title -->
 
-<title
-  >{#if archived}Архив — {/if}Дни рождений {grade}</title
->
+<title>
+  {#if archived}Архив — {/if}Дни рождений {grade}
+</title>
 
 <main>
   <h1 class="text-center">Дни рождений {grade}</h1>
@@ -63,6 +63,8 @@
   <h2 class="text-center text-muted" style="font-size: 1.5em">
     {#if archived}
       Архив
+    {:else}
+      Сейчас в классе
     {/if}
   </h2>
 
@@ -74,9 +76,9 @@
           <div class="card my-2">
             <div class="card-body">
               <!-- Name -->
-              <h2 class="text-center card-title fw-normal">{student[0]}</h2>
+              <h3 class="text-center card-title fw-normal">{student[0]}</h3>
               <!-- Date of Birth -->
-              <h3
+              <h4
                 class="text-center card-subtitle text-muted"
                 style="font-size: 1.2em"
               >
@@ -85,7 +87,7 @@
                 {:else}
                   {student[1]}
                 {/if}
-              </h3>
+              </h4>
             </div>
             <!-- Year when left, if archived mode -->
             {#if archived}
@@ -105,13 +107,13 @@
       <div
         class="text-center d-flex justify-content-center col-sm container text-nowrap"
       >
-        <button class="btn btn-primary m-3" on:click={setArchived}
-          >{#if archived}
+        <button class="btn btn-primary m-3" on:click={setArchived}>
+          {#if archived}
             ⟨ Вернуться на главную
           {:else}
             Перейти в архив ⟩
-          {/if}</button
-        >
+          {/if}
+        </button>
       </div>
       <div
         class="text-center d-flex justify-content-center align-items-center col-sm container text-nowrap"
