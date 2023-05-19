@@ -1,3 +1,6 @@
+> **No longer up to date!<br/>**
+> I left this school in 2023. GitHub Pages site will not be updated and can go offline at any time.
+
 # Birthday Dates Website
 
 Website with my classmates' birthday dates. Link: [GitHub Pages](https://germanivanov0719.github.io/birthday-dates/).
